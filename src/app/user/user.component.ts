@@ -1,4 +1,16 @@
-import { Component, computed, EventEmitter, Input, input, Output} from '@angular/core';
+import { Component, computed, EventEmitter, Input, input, output, Output} from '@angular/core';
+
+// type User = {
+//   id: string;
+//   avatar: string;
+//   name: string;
+// }
+
+interface User {
+  id: string;
+  avatar: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-user',
@@ -8,10 +20,13 @@ import { Component, computed, EventEmitter, Input, input, Output} from '@angular
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  @Input({required:true}) id!: string;
-  @Input({required:true}) avatar!: String;
-  @Input({required:true}) name!: String;
-  @Output() select = new EventEmitter();
+  @Input({required:true}) user!: User;
+  // @Input({required:true}) id!: string;
+  // @Input({required:true}) avatar!: String;
+  // @Input({required:true}) name!: String;
+  @Output() select = new EventEmitter<string>();
+
+  //select = output<string>();
 
   /*THIS WAY IS WITH A RECENT VERSION OF ANGULAR
   // avatar = input.required<string>();
@@ -23,10 +38,10 @@ export class UserComponent {
   */
 
   get imagePath(){
-    return 'assets/users/'+ this.avatar;
+    return 'assets/users/'+ this.user.avatar;
   }
 
   onSelectUser(){
-    this.select.emit(this.id);
+    this.select.emit(this.user.id);
   }
 }
